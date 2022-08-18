@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>McWordTearer</title>
+</head>
+<body>
+    <b>Results for <%=locals.block_name%></b>
+    <a href="/">Go back</a>
+    <div class='column_holder'>
+        <div id="first_blocks_column" class="block_column">
+            <b>First block:</b>
+            <div id="first_blocks_column_grid" class="grid" data-firstblocks=<%-JSON.stringify(locals.first_blocks);%>></div>
+        </div>
+        <div id="last_blocks_column" class="block_column">
+            <b>Second block:</b>
+            <div id="last_blocks_column_grid" class="grid" data-lastblocks=<%-JSON.stringify(locals.last_blocks);%>></div>
+        </div>
+
+    </div>
+
+</body>
+<script>
+    const firstBlockscolumn = document.querySelector('#first_blocks_column_grid');
+    let firstBlocks = JSON.parse(firstBlockscolumn.dataset.firstblocks)
+    let FirstUsed = new Array();
+
+    firstBlocks.forEach(element => {
+        const block = document.createElement('p');
+
+        const elementText = element.split("[")[0].substring(10)
+        if (FirstUsed.includes(elementText)) {return}
+
+        const text = document.createTextNode(elementText);
+        block.appendChild(text);
+
+        const div = document.createElement('div');
+        div.appendChild(block);
+
+        firstBlockscolumn.appendChild(div);
+        FirstUsed.push(elementText)
+    });
+
+    const lastBlockscolumn = document.querySelector('#last_blocks_column_grid');
+    let lastBlocks = JSON.parse(lastBlockscolumn.dataset.lastblocks)
+    let LastUsed = new Array();
+
+    lastBlocks.forEach(element => {
+        const block = document.createElement('p');
+
+        const elementText = element.split("[")[0].substring(10)
+        if (LastUsed.includes(elementText)) {return}
+
+        const text = document.createTextNode(elementText);
+        block.appendChild(text);
+
+        const div = document.createElement('div');
+        div.appendChild(block);
+
+        lastBlockscolumn.appendChild(div);
+        LastUsed.push(elementText)
+    });
+</script>
+<style>
+    .column_holder {
+        vertical-align: text-top;
+        display: grid;
+        grid-auto-columns: 1fr;
+        grid-auto-rows: 1fr;
+        grid-auto-flow: column;
+        gap: 10px;
+        
+    }
+    .block_column {
+        border-color: rgb(99, 99, 99);
+        border-width: 5px;
+        border-style: solid;
+    }
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 5px;
+        padding: 5px;
+    }
+</style>
+</html>

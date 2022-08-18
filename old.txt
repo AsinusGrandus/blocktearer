@@ -1,0 +1,16 @@
+const firstBlockscolumn = document.getElementById('first_blocks_column');
+    const firstBlocks = <%=locals.first_blocks%>;
+    firstBlocks.forEach(element => {
+        console.log(element)
+        const block = document.createElement('p');
+        block.value = element;
+        first_blocks.appendChild(block);
+    });
+    const last_blocks = document.getElementById('last_blocks_column');
+
+
+let lastBlocks = JSON.parse(lastBlockscolumn.dataset.lastblocks)
+const lastBlocksCleaned = [... new Set(lastBlocks.forEach((e,i)=>{lastBlocks[i] = e.split("[")[0].substring(10)}))]
+
+
+https://static.wikia.nocookie.net/minecraft_gamepedia/images/d/d4/Stone.png

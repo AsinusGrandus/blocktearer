@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>McWordTearer</title>
+</head>
+<body>
+    <form action="/submit" method="post">
+        <input list="block_name" name="block_name">
+        <datalist id="block_name"></datalist>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+<script>
+    fetch("/api/blocklist").then((response) => response.json()).then((data) => { 
+        const datalist = document.getElementById('block_name');
+        let Used = new Array();
+        Object.keys(data).forEach((element) => {
+            const option = document.createElement('option');
+            if(data[element]["name"] == "null"){return}
+            const newName = data[element]["name"].split("[")[0].substring(10)
+            if(Used.includes(newName)) { return}
+            option.value = newName;
+            Used.push(newName);
+            datalist.appendChild(option);
+        });
+    });
+</script>
+</html>
