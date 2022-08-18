@@ -11,11 +11,11 @@
     <a href="/">Go back</a>
     <div class='column_holder'>
         <div id="first_blocks_column" class="block_column">
-            <b>First block:</b>
-            <div id="first_blocks_column_grid" class="grid" data-firstblocks=<%-JSON.stringify(locals.first_blocks);%>></div>
+            <b>First block options:</b>
+            <div id="first_blocks_column_grid" class="grid" data-firstblocks="<%=locals.first_blocks%>"></div>
         </div>
         <div id="last_blocks_column" class="block_column">
-            <b>Second block:</b>
+            <b>Second block options:</b>
             <div id="last_blocks_column_grid" class="grid" data-lastblocks=<%-JSON.stringify(locals.last_blocks);%>></div>
         </div>
 
@@ -24,13 +24,15 @@
 </body>
 <script>
     const firstBlockscolumn = document.querySelector('#first_blocks_column_grid');
+
     let firstBlocks = JSON.parse(firstBlockscolumn.dataset.firstblocks)
+    console.log(typeof(firstBlocks), firstBlocks)
     let FirstUsed = new Array();
 
     firstBlocks.forEach(element => {
         const block = document.createElement('p');
 
-        const elementText = element.split("[")[0].substring(10)
+        const elementText = element.name
         if (FirstUsed.includes(elementText)) {return}
 
         const text = document.createTextNode(elementText);
@@ -43,25 +45,25 @@
         FirstUsed.push(elementText)
     });
 
-    const lastBlockscolumn = document.querySelector('#last_blocks_column_grid');
-    let lastBlocks = JSON.parse(lastBlockscolumn.dataset.lastblocks)
-    let LastUsed = new Array();
+    // const lastBlockscolumn = document.querySelector('#last_blocks_column_grid');
+    // let lastBlocks = JSON.parse(lastBlockscolumn.dataset.lastblocks)
+    // let LastUsed = new Array();
 
-    lastBlocks.forEach(element => {
-        const block = document.createElement('p');
+    // lastBlocks.forEach(element => {
+    //     const block = document.createElement('p');
 
-        const elementText = element.split("[")[0].substring(10)
-        if (LastUsed.includes(elementText)) {return}
+    //     const elementText = element.split("[")[0].substring(10)
+    //     if (LastUsed.includes(elementText)) {return}
 
-        const text = document.createTextNode(elementText);
-        block.appendChild(text);
+    //     const text = document.createTextNode(elementText);
+    //     block.appendChild(text);
 
-        const div = document.createElement('div');
-        div.appendChild(block);
+    //     const div = document.createElement('div');
+    //     div.appendChild(block);
 
-        lastBlockscolumn.appendChild(div);
-        LastUsed.push(elementText)
-    });
+    //     lastBlockscolumn.appendChild(div);
+    //     LastUsed.push(elementText)
+    // });
 </script>
 <style>
     .column_holder {

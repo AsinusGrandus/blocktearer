@@ -8,23 +8,39 @@
 </head>
 <body>
     <form action="/submit" method="post">
-        <input list="block_name" name="block_name">
+        <input list="block_name" name="block_name" id="blockname">
         <datalist id="block_name"></datalist>
         <button type="submit">Submit</button>
     </form>
+    <div class="details">
+        <p>Details:</p>
+        <p id="details"></p>
+    </div>
 </body>
 <script>
     fetch("/api/blocklist").then((response) => response.json()).then((data) => { 
         const datalist = document.getElementById('block_name');
-        let Used = new Array();
+
         Object.keys(data).forEach((element) => {
+            const name = data[element].name;
+            const id = data[element].id;
+            
+            if(name == "null"){return}
+
             const option = document.createElement('option');
-            if(data[element]["name"] == "null"){return}
-            const newName = data[element]["name"].split("[")[0].substring(10)
-            if(Used.includes(newName)) { return}
-            option.value = newName;
-            Used.push(newName);
+            option.value = `${id}: ${name}`;
             datalist.appendChild(option);
+        });
+
+        document.getElementById('blockname').addEventListener('change', function() {
+            const idName = document.getElementById('blockname')
+            const details = document.getElementById('details');
+            const id = idName.value == "" ? "null": idName.value.split(":")[0] // split id: name into ['id', ' name']
+
+            if (id == "null") {return}
+
+            details.innerHTML = data[id].details;
+
         });
     });
 </script>
