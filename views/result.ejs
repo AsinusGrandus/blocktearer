@@ -12,60 +12,68 @@
     <div class='column_holder'>
         <div id="first_blocks_column" class="block_column">
             <b>First block options:</b>
-            <div id="first_blocks_column_grid" class="grid" data-firstblocks="<%=locals.first_blocks%>"></div>
+            <div id="first_blocks_column_grid" class="grid" data-blocks="<%=locals.first_blocks%>"></div>
         </div>
         <div id="last_blocks_column" class="block_column">
             <b>Second block options:</b>
-            <div id="last_blocks_column_grid" class="grid" data-lastblocks=<%-JSON.stringify(locals.last_blocks);%>></div>
+            <div id="last_blocks_column_grid" class="grid" data-blocks="<%=locals.last_blocks%>"></div>
         </div>
-
     </div>
 
 </body>
+<!-- https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_popup -->
 <script>
-    const firstBlockscolumn = document.querySelector('#first_blocks_column_grid');
+    const columnIds = ['#first_blocks_column_grid', '#last_blocks_column_grid']
 
-    let firstBlocks = JSON.parse(firstBlockscolumn.dataset.firstblocks)
-    console.log(typeof(firstBlocks), firstBlocks)
-    let FirstUsed = new Array();
+    columnIds.forEach((id) => {
+        // get column
+        const blockColumn = document.querySelector(id);
+        // get block data
+        const blocks = JSON.parse(blockColumn.dataset.blocks);
 
-    firstBlocks.forEach(element => {
-        const block = document.createElement('p');
+        let Used = new Array();
 
-        const elementText = element.name
-        if (FirstUsed.includes(elementText)) {return}
+        blocks.forEach((element) => {
+            // create new element with it's name
+            const blockP = document.createElement('p');
+            const elementText = element.name
 
-        const text = document.createTextNode(elementText);
-        block.appendChild(text);
+            if (Used.includes(elementText)) {
+                // the block is already used
+                return
+            }
+            // add popup
+            const span = document.createElement('span');
+            span.classList.add("popuptext");
+            span.id = `${element.id}: ${element.name}`;
+            span.dataset.block = element;
+// dataset should be list, if is used, push details else create list with details
+// bind popupfunction with id, get details using said id
+            // <span class="popuptext" id="myPopup">A Simple Popup!</span>
+            // add text to <p>
+            const text = document.createTextNode(elementText);
+            blockP.appendChild(text);
 
-        const div = document.createElement('div');
-        div.appendChild(block);
+            // add <p> to <div>
+            const div = document.createElement('div');
+            div.appendChild(blockP);
 
-        firstBlockscolumn.appendChild(div);
-        FirstUsed.push(elementText)
-    });
+            // append to column
+            blockColumn.appendChild(div);
 
-    // const lastBlockscolumn = document.querySelector('#last_blocks_column_grid');
-    // let lastBlocks = JSON.parse(lastBlockscolumn.dataset.lastblocks)
-    // let LastUsed = new Array();
+            // mark element as used
+            Used.push(elementText)
+        })
 
-    // lastBlocks.forEach(element => {
-    //     const block = document.createElement('p');
+    })
 
-    //     const elementText = element.split("[")[0].substring(10)
-    //     if (LastUsed.includes(elementText)) {return}
-
-    //     const text = document.createTextNode(elementText);
-    //     block.appendChild(text);
-
-    //     const div = document.createElement('div');
-    //     div.appendChild(block);
-
-    //     lastBlockscolumn.appendChild(div);
-    //     LastUsed.push(elementText)
-    // });
+    function popUp(id) {
+        var popup = document.getElementById("myPopup");
+        popup.classList.toggle("show");
+    }
 </script>
 <style>
+    /*Website style*/
     .column_holder {
         vertical-align: text-top;
         display: grid;
@@ -82,9 +90,67 @@
     }
     .grid {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         gap: 5px;
         padding: 5px;
+    }
+
+    /*Popup style - https://www.w3schools.com/howto/howto_js_popup.asp */
+    /* Popup container - can be anything you want */
+    .popup {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    }
+
+    /* The actual popup */
+    .popup .popuptext {
+    visibility: hidden;
+    width: 160px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -80px;
+    }
+
+    /* Popup arrow */
+    .popup .popuptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+    }
+
+    /* Toggle this class - hide and show the popup */
+    .popup .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+    }
+
+    /* Add animation (fade in the popup) */
+    @-webkit-keyframes fadeIn {
+    from {opacity: 0;} 
+    to {opacity: 1;}
+    }
+
+    @keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity:1 ;}
     }
 </style>
 </html>
