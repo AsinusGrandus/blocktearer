@@ -1,7 +1,6 @@
 //  npm run devStart
 const fs = require('fs');
 const express = require('express');
-const { type } = require('os');
 
 const app = express();
 app.use(express.urlencoded({ extended: true }))
@@ -17,8 +16,58 @@ class Block {
         this.lastNineBits = this.bits.substring(4)
 
         this.longName = longName;
-        this.name = longName == "null" ? "null": longName.split("[")[0].substring(10) ; // split long name into minecraft:name and details]
         this.details = longName.includes("[") ? longName.split("[")[1].slice(0, -1).split(",") : "no details"; // split long name into minecraft:name and details], remove ] at the end and split into list
+        
+        this.name = longName == "null" ? "null": longName.split("[")[0].substring(10); // split long name into minecraft:name and details]
+        this.oldName = this.name;
+
+        if (this.name == "golden_rail") { this.name = "powered_rail" }
+        if (this.name == "bed") { this.name = "white_bed" }
+        if (this.name == "web") { this.name = "cobweb" }
+        if (this.name == "noteblock") { this.name = "note_block" }
+        if (this.name == "melon_block") { this.name = "note_block" }
+        if (this.name == "wooden_pressure_plate") { this.name = "oak_pressure_plate"}
+        if (this.name == "deadbush") { this.name = "dead_bush" }
+        if (this.name == "mob_spawner") { this.name = "spawner" }
+
+        if (this.name.includes('flowing_')) {
+            this.name = this.name.split("_")[1]; // remove flowing_ from name. Example: flowing_water -> water
+            this.details.push("flowing=true");
+        }
+        if (this.details != "no details") {
+            this.details.forEach((detail) => {
+                if (detail.includes("variant")) {
+                    const variant = detail.split("=")[1]; // get variant
+                    const variantOnly = ['stone', 'dirt', 'sand'] // stone_variant is not a valid name, variant alone is
+                    const variantShuffle = ['log', 'leaves', 'planks'] // log_variant is not a valid name, variant_log is
+
+                    if (variantOnly.includes(this.name)) { 
+                        if (this.name == 'stone' && variant.includes('smooth')) {
+                            this.name = variant.replace("smooth", "polished")
+                            return
+                        }
+                        this.name = variant 
+                    } 
+                    else if (variantShuffle.includes(this.name)) { 
+                        this.name = variant + '_' + this.name 
+                    }
+                } else if (detail.includes("type")) {
+                    const type = detail.split("=")[1]; // get type 
+                    const typeOnly = ['red_flower', 'yellow_flower', 'tallgrass'] // stone_variant is not a valid name, variant alone is
+                    const typeShuffel = ['sapling']; // sapling_variant is not a valid name, variant_sapling is
+                    
+                    if (typeOnly.includes(this.name)) { this.name = type }
+                    else if (typeShuffel.includes(this.name)) { this.name = type + '_' + this.name }
+                     
+                    // if (this.name == "tallgrass") { this.name = type }
+                } else if (detail.includes("color")) {
+                    const color = detail.split("=")[1];
+                    const colorShuffel = ['wool']
+
+                    if (colorShuffel.includes(this.name)) { this.name = color + "_" + this.name}
+                }
+            })
+        }        
     }
 }
 
@@ -74,7 +123,6 @@ app.post("/submit", async (req, res) => {
 
     Object.keys(data).forEach((element) => {
         const block = data[element];
-        
         if (block.name == name.toString() || block.name == "null") { return }
         
         // It is a valid block and not itself

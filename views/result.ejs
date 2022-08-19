@@ -57,18 +57,29 @@
             span.dataset.block = JSON.stringify([element]);
 
             // add text to <p>
-            const text = document.createTextNode(elementText);
+            const text = document.createTextNode(element.oldName);
             blockP.appendChild(text);
-
+            
             // add <p> to <div>
             const div = document.createElement('div');
-            div.appendChild(blockP);
+            div.id = 'block';
             div.appendChild(span);
             div.classList.add("popup");
             div.addEventListener("click", function(){ popUp(spanId); });
             // append to column
             blockColumn.appendChild(div);
 
+            // add image
+            const img = document.createElement('img');
+            img.src = `https://minecraft-api.vercel.app/images/blocks/${element.name}.png`
+            img.setAttribute("height", "50");
+            img.setAttribute("width", "50");
+            img.addEventListener("error", function(){ 
+                this.onerror=null;
+                this.src='https://minecraft-api.vercel.app/images/blocks/air.png'
+             });
+            div.appendChild(img)
+            div.appendChild(blockP);
             // mark element as used
             Used.push(elementText)
         })
@@ -110,7 +121,10 @@
         gap: 5px;
         padding: 5px;
     }
-
+    #block {
+        display: grid;
+        place-items:  center;
+    }
     /*Popup style - https://www.w3schools.com/howto/howto_js_popup.asp */
     /* Popup container - can be anything you want */
     .popup {
