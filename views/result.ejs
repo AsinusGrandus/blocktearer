@@ -40,16 +40,22 @@
 
             if (Used.includes(elementText)) {
                 // the block is already used
+                const span = document.getElementById(`${element.name}`);
+                if (span == "undefined") {return}
+                const blockArray = JSON.parse(span.dataset.block);
+                blockArray.push(element)
+
+                span.dataset.block = JSON.stringify(blockArray);
+
                 return
             }
             // add popup
             const span = document.createElement('span');
+            const spanId = `${element.name}`;
             span.classList.add("popuptext");
-            span.id = `${element.id}: ${element.name}`;
-            span.dataset.block = element;
-// dataset should be list, if is used, push details else create list with details
-// bind popupfunction with id, get details using said id
-            // <span class="popuptext" id="myPopup">A Simple Popup!</span>
+            span.id = spanId;
+            span.dataset.block = JSON.stringify([element]);
+
             // add text to <p>
             const text = document.createTextNode(elementText);
             blockP.appendChild(text);
@@ -57,7 +63,9 @@
             // add <p> to <div>
             const div = document.createElement('div');
             div.appendChild(blockP);
-
+            div.appendChild(span);
+            div.classList.add("popup");
+            div.addEventListener("click", function(){ popUp(spanId); });
             // append to column
             blockColumn.appendChild(div);
 
@@ -68,7 +76,15 @@
     })
 
     function popUp(id) {
-        var popup = document.getElementById("myPopup");
+        const popup = document.getElementById(id);
+        const blockArray = JSON.parse(popup.dataset.block)
+        let text = new String();
+
+        blockArray.forEach((block) => {
+            text += block.details + ", ";
+        })
+        popup.innerText =  popup.textContent ? popup.textContent : text
+
         popup.classList.toggle("show");
     }
 </script>
@@ -98,59 +114,59 @@
     /*Popup style - https://www.w3schools.com/howto/howto_js_popup.asp */
     /* Popup container - can be anything you want */
     .popup {
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
     }
 
     /* The actual popup */
     .popup .popuptext {
-    visibility: hidden;
-    width: 160px;
-    background-color: #555;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 8px 0;
-    position: absolute;
-    z-index: 1;
-    bottom: 125%;
-    left: 50%;
-    margin-left: -80px;
+        visibility: hidden;
+        width: 160px;
+        background-color: rgb(156, 156, 156);
+        color: rgb(255, 255, 255);
+        text-align: center;
+        border-radius: 6px;
+        padding: 8px 0;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -80px;
     }
 
     /* Popup arrow */
     .popup .popuptext::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: #555 transparent transparent transparent;
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: rgb(156, 156, 156) transparent transparent transparent;
     }
 
     /* Toggle this class - hide and show the popup */
     .popup .show {
-    visibility: visible;
-    -webkit-animation: fadeIn 1s;
-    animation: fadeIn 1s;
+        visibility: visible;
+        -webkit-animation: fadeIn 0.5s;
+        animation: fadeIn 0.5s;
     }
 
     /* Add animation (fade in the popup) */
     @-webkit-keyframes fadeIn {
-    from {opacity: 0;} 
-    to {opacity: 1;}
+        from {opacity: 0;} 
+        to {opacity: 1;}
     }
 
     @keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity:1 ;}
+        from {opacity: 0;}
+        to {opacity:1 ;}
     }
 </style>
 </html>
