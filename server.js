@@ -21,19 +21,30 @@ class Block {
         this.name = longName == "null" ? "null": longName.split("[")[0].substring(10); // split long name into minecraft:name and details]
         this.oldName = this.name;
 
-        if (this.name == "golden_rail") { this.name = "powered_rail" }
-        if (this.name == "bed") { this.name = "white_bed" }
-        if (this.name == "web") { this.name = "cobweb" }
-        if (this.name == "noteblock") { this.name = "note_block" }
-        if (this.name == "melon_block") { this.name = "note_block" }
-        if (this.name == "wooden_pressure_plate") { this.name = "oak_pressure_plate"}
-        if (this.name == "deadbush") { this.name = "dead_bush" }
-        if (this.name == "mob_spawner") { this.name = "spawner" }
+        // Change the name to get the image later
+        const change = {
+            "golden_rail": "powered_rail",
+            "bed": "white_bed",
+            "web": "cobweb",
+            "noteblock": "note_block",
+            "melon_block": "melon",
+            "wooden_pressure_plate": "oak_pressure_plate",
+            "deadbush": "dead_bush",
+            "mob_spawner": "spawner",
+            "monster_egg": "infested_stone"
+        }
+
+        Object.keys(change).forEach((name) => {
+            if (this.name == name) {
+                this.name = change[name];
+            }
+        })
 
         if (this.name.includes('flowing_')) {
             this.name = this.name.split("_")[1]; // remove flowing_ from name. Example: flowing_water -> water
             this.details.push("flowing=true");
         }
+
         if (this.details != "no details") {
             this.details.forEach((detail) => {
                 if (detail.includes("variant")) {
@@ -83,20 +94,6 @@ function getBlocks(){
     return data
 }
 
-function getIdbyName(block_name) {
-    let id = new String();
-    const data = getBlocks()
-
-    for (let element of Object.keys(data)) {
-        const name = data[element].name;
-        if (block_name == name) {
-            id = data[element].id;
-            break
-        }
-    }
-    return id
-}
-
 app.get("/", (req, res) => {
     res.render("home")
 })
@@ -109,14 +106,15 @@ app.get("/api/blocklist", (req, res) => {
 app.post("/submit", async (req, res) => {
     const data = getBlocks();
     const idName = req.body.block_name;
+    const id = idName.split(":")[0] // split id: name into ['id:', 'name']
+    const name = idName.split(" ")[1] // split id: name into ['id:', 'name']
 
-    if (idName == "") {
+    if (idName == "" || !/[0-9]+: [a-z]+/.test(idName)) {
         res.redirect("/")
         return
     }
 
-    const name = idName.split(" ")[1] // split id: name into ['id:', 'name']
-    const submittedBlock = data[await getIdbyName(name)];
+    const submittedBlock = data[id];
 
     let firstBlocks = new Array();
     let lastBlocks = new Array();
