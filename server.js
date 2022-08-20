@@ -10,13 +10,13 @@ class Block {
     constructor(id, longName, hexadecimal, bits) {
         this.id = id;
         this.hexadecimal = hexadecimal;
-
+        
         this.bits = bits.substring(2, 15);
         this.firstFourBits = this.bits.substring(0, 4)
         this.lastNineBits = this.bits.substring(4)
 
         this.longName = longName;
-        this.details = longName.includes("[") ? longName.split("[")[1].slice(0, -1).split(",") : "no details"; // split long name into minecraft:name and details], remove ] at the end and split into list
+        this.details = longName.includes("[") ? longName.split("[")[1].slice(0, -1).split(",") : ["no details"]; // split long name into minecraft:name and details], remove ] at the end and split into list
         
         this.name = longName == "null" ? "null": longName.split("[")[0].substring(10); // split long name into minecraft:name and details]
         this.oldName = this.name;
@@ -78,7 +78,8 @@ class Block {
                     if (colorShuffel.includes(this.name)) { this.name = color + "_" + this.name}
                 }
             })
-        }        
+        }  
+        this.img = `https://minecraft-api.vercel.app/images/blocks/${this.name}.png`;      
     }
 }
 
@@ -133,7 +134,7 @@ app.post("/submit", async (req, res) => {
         } else { return }
     })
 
-    res.render("result", { block_name: name, first_blocks: JSON.stringify(firstBlocks), last_blocks: JSON.stringify(lastBlocks)})
+    res.render("result", { block: submittedBlock, first_blocks: JSON.stringify(firstBlocks), last_blocks: JSON.stringify(lastBlocks)})
 })
 
 app.listen(process.env.PORT || 3000)

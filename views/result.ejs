@@ -7,8 +7,12 @@
     <title>McWordTearer</title>
 </head>
 <body>
-    <b>Results for <%=locals.block_name%></b>
     <a href="/">Go back</a>
+    <br>
+    <h3><%=locals.block.id%>: <%=locals.block.name%></h3>
+    <div><%=locals.block.firstFourBits%> <%=locals.block.lastNineBits%></div>
+    <div><%=locals.block.details%></div>
+    <br>
     <div class='column_holder'>
         <div id="first_blocks_column" class="block_column">
             <b>First block options:</b>
@@ -23,6 +27,7 @@
     <div class="modal">
         <div class="modal-content">
             <span class="close-button">x</span>
+            <!-- <img id="blockimg"> -->
             <h3 id="blockname">Block name</h3>
             <div id="bits"><b>4bits</b>9bits</div>
             <div id="details">details</div>
@@ -48,7 +53,7 @@
                 if (detailsDiv == "undefined") {return}
 
                 const blockArray = JSON.parse(detailsDiv.dataset.details);
-                blockArray.push([element.details]);
+                blockArray.push(element);
                 detailsDiv.dataset.details = JSON.stringify(blockArray);
 
                 return
@@ -59,14 +64,14 @@
             div.id = element.name;
             div.classList.add('block')
             div.addEventListener("click", function(){ popUp(element.name); });
-            div.dataset.details = JSON.stringify([element.details]);
+            div.dataset.details = JSON.stringify([element]);
             div.dataset.block = JSON.stringify([element]);
             // append to column
             blockColumn.appendChild(div);
 
             // Create <img> element
             const img = document.createElement('img');
-            img.src = `https://minecraft-api.vercel.app/images/blocks/${element.name}.png`
+            img.src = element.img
             img.setAttribute("height", "50");
             img.setAttribute("width", "50");
             img.addEventListener("error", function(){ 
@@ -97,19 +102,31 @@
         closeButton.addEventListener("click", toggleModal);
 
         const dataDiv = document.getElementById(id);
-        const details = JSON.parse(dataDiv.dataset.details);
+        const details = JSON.parse(dataDiv.dataset.details); // [{},{}]
         const block = JSON.parse(dataDiv.dataset.block)[0];
+
+        // const imgImg = document.getElementById("blockimg");
+        // img.src = block.img;
+
         const nameH = document.getElementById('blockname');
         nameH.innerHTML = 'Name: ' + block.name;
 
         const bitsDiv = document.getElementById('bits');
-        bitsDiv.innerHTML = 'Bits: ' + block.bits;
+        bitsDiv.innerHTML = 'Bits: ' + block.firstFourBits + ' ' + block.lastNineBits;
 
         const detailDiv = document.getElementById('details');
-        let detailText = new String();
+        let detailDivText = "Details:<br>";
         
+
+        details.forEach((block) => {
+            let detailText = new String();
+            block.details.forEach((detail) => {
+                detailText += detail + ", ";
+            })
+            detailDivText += block.id + ': ' + detailText.slice(0, -2) + "<br>";
+        })
         // Make this prettier
-        detailDiv.innerHTML = 'Details:<br>' + JSON.stringify(details).replace('],[', ']<br>[');
+        detailDiv.innerHTML = detailDivText;
 
         toggleModal()
     }
