@@ -40,10 +40,10 @@ class Block {
             }
         })
 
-        if (this.name.includes('flowing_')) {
-            this.name = this.name.split("_")[1]; // remove flowing_ from name. Example: flowing_water -> water
-            this.details.push("flowing=true");
-        }
+        // if (this.name.includes('flowing_')) {
+        //     this.name = this.name.split("_")[1]; // remove flowing_ from name. Example: flowing_water -> water
+        //     this.details.push("flowing=true");
+        // }
 
         if (this.details != "no details") {
             this.details.forEach((detail) => {
@@ -106,7 +106,7 @@ app.get("/api/blocklist", (req, res) => {
 app.post("/submit", async (req, res) => {
     const data = getBlocks();
     const idName = req.body.block_name;
-    const id = idName.split(":")[0] // split id: name into ['id:', 'name']
+    const id = idName.split(":")[0] // split id: name into ['id', ' name']
     const name = idName.split(" ")[1] // split id: name into ['id:', 'name']
 
     if (idName == "" || !/[0-9]+: [a-z]+/.test(idName)) {

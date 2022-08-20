@@ -19,6 +19,7 @@
             <div id="last_blocks_column_grid" class="grid" data-blocks="<%=locals.last_blocks%>"></div>
         </div>
     </div>
+    <!-- Popup -->
     <div class="modal">
         <div class="modal-content">
             <span class="close-button">x</span>
@@ -28,7 +29,6 @@
         </div>
     </div>
 </body>
-<!-- https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_popup -->
 <script>
     const columnIds = ['#first_blocks_column_grid', '#last_blocks_column_grid']
 
@@ -42,6 +42,7 @@
         blocks.forEach((element) => {
             if (Used.includes(element.name)) {
                 // the block is already used
+                // A <p> and <img> are combined into a <div> that has an array with details and the block it belongs to as dataset
                 const detailsDiv = document.getElementById(element.name);
 
                 if (detailsDiv == "undefined") {return}
@@ -53,7 +54,7 @@
                 return
             }
 
-            // Create <div> element that will contain <p> and <img>
+            // Create <div> element that will contain <p> and <img> 
             const div = document.createElement('div');
             div.id = element.name;
             div.classList.add('block')

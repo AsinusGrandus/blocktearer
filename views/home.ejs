@@ -7,30 +7,50 @@
     <title>McWordTearer</title>
 </head>
 <body>
-    <form action="/submit" method="post">
-        <input list="block_name" name="block_name" id="blockname">
-        <datalist id="block_name"></datalist>
-        <button type="submit">Submit</button>
-    </form>
-    <div class="details">
-        <p>Details:</p>
-        <p id="details"></p>
+    <div class='column_holder'>
+        <div class="block_column">
+            <p>The block you want to get:</p>
+            <form action="/submit" method="post">
+                <input list="block_name" name="block_name" id="blockname">
+                <datalist id="block_name"></datalist>
+                <button type="submit">Submit</button>
+            </form>
+            <div class="details">
+                <p>Details:</p>
+                <p id="details"></p>
+            </div>
+        </div>
+        <div class="block_column">
+            <p>All block ids:</p>
+            <p id="all_data"></p>
+        </div>
     </div>
 </body>
 <script>
     fetch("/api/blocklist").then((response) => response.json()).then((data) => { 
         const datalist = document.getElementById('block_name');
+        let Used = new Object();
+        let All = new String();
 
-        Object.keys(data).forEach((element) => {
-            const name = data[element].name;
-            const id = data[element].id;
-            
+        Object.keys(data).forEach((key) => {
+            const element = data[key]
+            const name = element.name;
+            const id = element.id;
             if(name == "null"){return}
+                        
+            //Add to all_data <p>
+            All += `${element.id}: ${element.longName}<br>`;
 
+            // Add to options
             const option = document.createElement('option');
             option.value = `${id}: ${name}`;
             datalist.appendChild(option);
+            Used[element.name] = element;
         });
+
+        const dataP = document.getElementById('all_data');
+        // const text = document.createTextNode(All);
+        dataP.innerHTML = All;
 
         document.getElementById('blockname').addEventListener('change', function() {
             const idName = document.getElementById('blockname')
@@ -44,4 +64,20 @@
         });
     });
 </script>
+<style>
+    .column_holder {
+        vertical-align: text-top;
+        display: grid;
+        grid-auto-columns: 1fr;
+        grid-auto-rows: 1fr;
+        grid-auto-flow: column;
+        gap: 10px;
+        
+    }
+    /* .block_column {
+        border-color: rgb(99, 99, 99);
+        border-width: 5px;
+        border-style: solid;
+    } */
+</style>
 </html>
