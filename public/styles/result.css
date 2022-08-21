@@ -1,3 +1,39 @@
+/* Tabs */
+[data-tab-content] {
+    display: none;
+}
+
+.active[data-tab-content] {
+    display: block;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.tabs {
+    display: flex;
+    justify-content: space-around;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid black;
+}
+
+.tab {
+    cursor: pointer;
+    padding: 5px;
+}
+
+.tab.active {
+    background-color: rgb(121, 121, 121);
+}
+
+.tab:hover {
+    background-color: rgb(185, 185, 185);
+}
+
 /*Website style*/
 .column_holder {
     vertical-align: text-top;

@@ -11,27 +11,64 @@
     <title>McWordTearer</title>
 </head>
 <body>
-    <ul>
-        <li>White</li>
-        <li>Orange</li>
-        <li>Magenta</li>
-        <li>Light Blue</li>
-        <li>Yellow</li>
-        <li>Lime</li>
-        <li>Pink</li>
-        <li>Gray</li>
-        <li>Light Gray</li>
-        <li>Cyan</li>
-        <li>Purple</li>
-        <li>Blue</li>
-        <li>Brown</li>
+    <ul class="tabs" id="tabnav">
+        <li class='active tab' data-tab-target="#white">White</li>
+        <li class='tab' data-tab-target="#orange">Orange</li>
+        <li class='tab' data-tab-target="#magenta">Magenta</li>
+        <li class='tab' data-tab-target="#light-blue">Light Blue</li>
+        <li class='tab' data-tab-target="#yellow">Yellow</li>
+        <li class='tab' data-tab-target="#lime">Lime</li>
+        <li class='tab' data-tab-target="#pink">Pink</li>
+        <li class='tab' data-tab-target="#gray">Gray</li>
+        <li class='tab' data-tab-target="#light-gray">Light Gray</li>
+        <li class='tab' data-tab-target="#cyan">Cyan</li>
+        <li class='tab' data-tab-target="#purple">Purple</li>
+        <li class='tab' data-tab-target="#blue">Blue</li>
+        <li class='tab' data-tab-target="#brown">Brown</li>
     </ul>
 
     <div class="tab-content">
-        <div id="tab1">
-            <p>tab1 content</p>
+        <div class='active' id="white" data-tab-content>
+            <p>The wordtearing needs to take place in the location from the white wool block</p>
+        </div>
+        <div id="orange" data-tab-content>
+            <p>The wordtearing needs to take place in the location from the orange wool block</p>
+        </div>
+        <div id="magenta" data-tab-content>
+            <p>The wordtearing needs to take place in the location from the magenta wool block</p>
+        </div>
+        <div id="light-blue" data-tab-content>
+            <p>Light Blue content</p>
+        </div>
+        <div id="yellow" data-tab-content>
+            <p>Yellow content</p>
+        </div>
+        <div id="lime" data-tab-content>
+            <p>Lime content</p>
+        </div>
+        <div id="pink" data-tab-content>
+            <p>Pink content</p>
+        </div>
+        <div id="gray" data-tab-content>
+            <p>Gray content</p>
+        </div>
+        <div id="light-gray" data-tab-content>
+            <p>Light Gray content</p>
+        </div>
+        <div id="cyan" data-tab-content>
+            <p>Cyan content</p>
+        </div>
+        <div id="purple" data-tab-content>
+            <p>Purple content</p>
+        </div>
+        <div id="blue" data-tab-content>
+            <p>Blue content</p>
+        </div>
+        <div id="brown" data-tab-content>
+            <p>Brown content</p>
         </div>
     </div>
+
     <a href="/">Go back</a>
     <br>
     <b><%=locals.block.id%>: <%=locals.block.name%></b>
