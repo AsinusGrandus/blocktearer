@@ -4,13 +4,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script type="text/javascript" src="static/scripts/home.js" defer></script>
+    <link rel="stylesheet" href="static/styles/home.css">
+
     <title>McWordTearer</title>
 </head>
 <body>
     <div class='column_holder'>
         <div class="block_column">
             <p>The block you want to get:</p>
-            <form action="/submit" method="post">
+            <form action="/result" method="post">
                 <input list="block_name" name="block_name" id="blockname">
                 <datalist id="block_name"></datalist>
                 <button type="submit">Submit</button>
@@ -26,58 +30,4 @@
         </div>
     </div>
 </body>
-<script>
-    fetch("/api/blocklist").then((response) => response.json()).then((data) => { 
-        const datalist = document.getElementById('block_name');
-        let Used = new Object();
-        let All = new String();
-
-        Object.keys(data).forEach((key) => {
-            const element = data[key]
-            const name = element.name;
-            const id = element.id;
-            if(name == "null"){return}
-                        
-            //Add to all_data <p>
-            All += `${element.id}: ${element.longName}<br>`;
-
-            // Add to options
-            const option = document.createElement('option');
-            option.value = `${id}: ${name}`;
-            datalist.appendChild(option);
-            Used[element.name] = element;
-        });
-
-        const dataP = document.getElementById('all_data');
-        // const text = document.createTextNode(All);
-        dataP.innerHTML = All;
-
-        document.getElementById('blockname').addEventListener('change', function() {
-            const idName = document.getElementById('blockname')
-            const details = document.getElementById('details');
-            const id = idName.value == "" ? "null": idName.value.split(":")[0] // split id: name into ['id', ' name']
-
-            if (id == "null") {return}
-
-            details.innerHTML = data[id].details;
-
-        });
-    });
-</script>
-<style>
-    .column_holder {
-        vertical-align: text-top;
-        display: grid;
-        grid-auto-columns: 1fr;
-        grid-auto-rows: 1fr;
-        grid-auto-flow: column;
-        gap: 10px;
-        
-    }
-    /* .block_column {
-        border-color: rgb(99, 99, 99);
-        border-width: 5px;
-        border-style: solid;
-    } */
-</style>
 </html>

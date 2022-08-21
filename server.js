@@ -4,6 +4,7 @@ const express = require('express');
 
 const app = express();
 app.use(express.urlencoded({ extended: true }))
+app.use('/static', express.static('public'));
 app.set('view engine', 'ejs')
 
 class Block {
@@ -104,7 +105,7 @@ app.get("/api/blocklist", (req, res) => {
     res.send(data);
 })
 
-app.post("/submit", async (req, res) => {
+app.post("/result", async (req, res) => {
     const data = getBlocks();
     const idName = req.body.block_name;
     const id = idName.split(":")[0] // split id: name into ['id', ' name']
