@@ -13,8 +13,6 @@ class Block {
         this.hexadecimal = hexadecimal;
         
         this.bits = bits.substring(2, 15);
-        this.firstFourBits = this.bits.substring(0, 4)
-        this.lastNineBits = this.bits.substring(4)
 
         this.longName = longName;
         this.details = longName.includes("[") ? longName.split("[")[1].slice(0, -1).split(",") : ["no details"]; // split long name into minecraft:name and details], remove ] at the end and split into list
