@@ -77,14 +77,18 @@ fetch("/api/blocklist").then((response) => response.json()).then((data) => {
     })
 })
 
+function getSubmittedBlock() {
+    const submittedBlockDiv = document.getElementById('submittedBlockDataDiv');
+    const submittedBlock = JSON.parse(submittedBlockDiv.dataset.submittedblock);
+    return submittedBlock
+}
 
 // Get blocks that match requirements
 function getBlocks(data, mode, bits) {
     // mode: first/last (bits that need to match)
     // bits: number (where to split the 13 bits)
     // Get sumbitted block
-    const submittedBlockDiv = document.getElementById('submittedBlockDataDiv');
-    const submittedBlock = JSON.parse(submittedBlockDiv.dataset.submittedblock);
+    const submittedBlock = getSubmittedBlock()
 
     let validBlocks = new Array();
 
@@ -95,7 +99,8 @@ function getBlocks(data, mode, bits) {
             return validBlocks
         }
 
-        if (block.name == submittedBlock.name.toString() || block.name == "null") { return }
+        // block.name == submittedBlock.name.toString() ||
+        if ( block.name == "null") { return }
         
         if (mode == 'first') {
             if (block.bits.substring(0, bits) === submittedBlock.bits.substring(0, bits)) {
@@ -119,11 +124,25 @@ function addInfoHeader(wooltype) {
     // Create info <div> that will display extra information above the grid
     const info = document.createElement('div');
 
+    const submittedBlock = getSubmittedBlock();
+    const bits = `<b>${submittedBlock.bits.substring(0,woolData[wooltype]['bits'])} ${submittedBlock.bits.substring(woolData[wooltype]['bits'])}</b>`
+
+    const goBack = document.createElement('a');
+    goBack.href = "/";
+    goBack.innerHTML = "<b><- Go back</b>";
+    goBack.style.textDecoration = "none";
+    goBack.style.color = "#0099ff";
+    const submittedBlockInfo = document.createElement('p');
+    submittedBlockInfo.innerHTML = `Selected block: (<b>${submittedBlock.id}) ${submittedBlock.name}</b><br>Bits: ${submittedBlock.bits}<br>Details: ${submittedBlock.details}`;
+
+
     // Give the location <p> properties and add to colour <div>
     const location = document.createElement('p');
-    location.innerHTML = `The wordtearing needs to take place in the location from the ${wooltype} wool block at bit ${woolData[wooltype]['bits']}`
+    location.innerHTML = `The wordtearing needs to take place in the location from the ${wooltype} wool block at bit ${woolData[wooltype]['bits']}: ${bits}`
 
     // Append childeren to the info <div>
+    info.appendChild(goBack);
+    info.appendChild(submittedBlockInfo);
     info.appendChild(location);
 
     return info
@@ -146,11 +165,12 @@ function addColumn(data, wooltype, name) {
     const blockColumn = document.createElement('div');
     // blockColumn.id = id;
     blockColumn.classList.add('block_column');
-
-
+    blockColumn.style.borderColor = woolData[wooltype]['colour'];
+    blockColumn.style.borderWidth = '5px';
+    blockColumn.style.borderStyle = 'solid';
     
     // Add explanation <p> to blockColumn <div>
-    blockColumn.appendChild(addExplanation(name));
+    blockColumn.appendChild(addExplanation(wooltype, name));
     blockColumn.appendChild(addGrid(data, wooltype, name))
     
     return blockColumn
@@ -224,10 +244,21 @@ function addBlock(block) {
     return blockdiv
 }
 
-function addExplanation(name) {
+function addExplanation(wooltype, name) {
+    const submittedBlock = getSubmittedBlock();
+
+
+    const firstBits = submittedBlock.bits.substring(0,woolData[wooltype]['bits']);
+    const lastBits = submittedBlock.bits.substring(woolData[wooltype]['bits']);
+
+    let bits = name == 'first' ? firstBits : lastBits;
+
+    if (bits == '') { bits = "null"}
+
     // Create new p <p> to explain the column
     const explanation = document.createElement('p');
-    explanation.innerHTML = `${name} block options:`;
+    explanation.innerHTML = `All blocks with '<b>${bits}</b>' as <b>${name} bits</b>:`;
+    explanation.style.padding = '5px';
 
     return explanation
 }
@@ -239,6 +270,8 @@ function blockResultsHolder(data, wooltype) {
     results.id = wooltype;
     results.dataset.tabContent = '';
 
+    results.style.backgroundColor = '#282b30';
+
     if (wooltype == 'white') { 
         results.classList.add('active'); 
     }
@@ -249,61 +282,6 @@ function blockResultsHolder(data, wooltype) {
     return results
 }
 
-
-// // Create two columns with blocks
-// columnIds.forEach((id) => {
-//     const blockColumn = document.querySelector(id); // get column x
-//     const blocks = JSON.parse(blockColumn.dataset.blocks); // get block data x
-
-//     let Used = new Array();
-
-//     blocks.forEach((element) => {
-//         if (Used.includes(element.name)) {
-//             // the block is already used
-//             // A <p> and <img> are combined into a <div> that has an array with details and the block it belongs to as dataset
-//             const detailsDiv = document.getElementById(element.name);
-
-//             if (detailsDiv == "undefined") {return}
-
-//             const blockArray = JSON.parse(detailsDiv.dataset.details);
-//             blockArray.push(element);
-//             detailsDiv.dataset.details = JSON.stringify(blockArray);
-
-//             return
-//         }
-
-//         // Create <div> element that will contain <p> and <img> 
-//         const div = document.createElement('div');
-//         div.id = element.name;
-//         div.classList.add('block')
-//         div.addEventListener("click", function(){ popUp(element.name); });
-//         div.dataset.details = JSON.stringify([element]);
-//         div.dataset.block = JSON.stringify([element]);
-//         // append to column
-//         blockColumn.appendChild(div);
-
-//         // Create <img> element
-//         const img = document.createElement('img');
-//         img.src = element.img
-//         img.setAttribute("height", "50");
-//         img.setAttribute("width", "50");
-//         img.addEventListener("error", function(){ 
-//             this.onerror=null;
-//             this.src='https://minecraft-api.vercel.app/images/blocks/air.png'
-//             });
-//         div.appendChild(img)
-
-//         // Create <p> element
-//         const blockP = document.createElement('p');
-//         const text = document.createTextNode(element.oldName);
-//         blockP.appendChild(text); // add text to <p>
-//         div.appendChild(blockP); // add to <div>
-                    
-//         // mark element as used
-//         Used.push(element.name)
-//     })
-
-// })
 
 // Popups
 function toggleModal() {
@@ -321,26 +299,33 @@ function popUp(id) {
 
     // const imgImg = document.getElementById("blockimg");
     // imgImg.src = block.img;
-
+    
     const nameH = document.getElementById('blockname');
     nameH.innerHTML = 'Name: ' + block.name;
 
     const bitsDiv = document.getElementById('bits');
     bitsDiv.innerHTML = 'Bits: ' + block.bits;
 
+    const detailsText = document.createElement('p');
+    let detailsDivText = "Details:<br>";
+    detailsText.innerHTML = detailsDivText;
+
     const detailDiv = document.getElementById('details');
-    let detailDivText = "Details:<br>";
+    detailDiv.style.height = "100px";
+    detailDiv.style.overflowY = 'auto';
     
+    let detaildetail = new String();
 
     details.forEach((block) => {
         let detailText = new String();
         block.details.forEach((detail) => {
             detailText += detail + ", ";
         })
-        detailDivText += block.id + ': ' + detailText.slice(0, -2) + "<br>";
+        detaildetail += block.id + ': ' + detailText.slice(0, -2) + "<br>";
     })
-    // Make this prettier
-    detailDiv.innerHTML = detailDivText;
+
+    detailDiv.innerHTML = detaildetail;
 
     toggleModal()
 }
+// https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_loader5

@@ -1,6 +1,7 @@
 /* Tabs */
 [data-tab-content] {
     display: none;
+    color: rgb(255, 255, 255);
 }
 
 .active[data-tab-content] {
@@ -11,6 +12,7 @@
 body {
     margin: 0;
     padding: 0;
+    background-color: #282b30;
 }
 
 .tabs {
@@ -20,7 +22,7 @@ body {
     margin: 0;
     padding: 0;
     border-bottom: 1px solid black;
-    background-color: rgb(40, 43, 48);
+    background-color: #282b30;
 }
 
 .tab {
@@ -37,6 +39,11 @@ body {
 }
 
 /*Website style*/
+* {
+    font-family: monospace;
+    font-size: 15px;
+}
+
 .column_holder {
     vertical-align: text-top;
     display: grid;
@@ -46,11 +53,11 @@ body {
     gap: 10px;
     
 }
-.block_column {
+/* .block_column {
     border-color: rgb(99, 99, 99);
     border-width: 5px;
     border-style: solid;
-}
+} */
 .grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -84,6 +91,7 @@ body {
     padding: 1rem 1.5rem;
     width: 25rem;
     border-radius: 0.5rem;
+    color: rgb(0, 0, 0);
 }
 
 .close-button {
