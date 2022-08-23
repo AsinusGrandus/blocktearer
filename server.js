@@ -116,24 +116,24 @@ app.post("/result", async (req, res) => {
 
     const submittedBlock = data[id];
 
-    let firstBlocks = new Array();
-    let lastBlocks = new Array();
+    // let firstBlocks = new Array();
+    // let lastBlocks = new Array();
 
-    Object.keys(data).forEach((element) => {
-        const block = data[element];
-        if (block.name == name.toString() || block.name == "null") { return }
+    // Object.keys(data).forEach((element) => {
+    //     const block = data[element];
+    //     if (block.name == name.toString() || block.name == "null") { return }
         
-        // It is a valid block and not itself
-        if (block.firstFourBits === submittedBlock.firstFourBits) {
-            // First 4 bits from the block match
-            firstBlocks.push(block)
-        } else if (block.lastNineBits === submittedBlock.lastNineBits) {
-            // Last 9 bits from the block match
-            lastBlocks.push(block)
-        } else { return }
-    })
-
-    res.render("result", { block: submittedBlock, first_blocks: JSON.stringify(firstBlocks), last_blocks: JSON.stringify(lastBlocks)})
+    //     // It is a valid block and not itself
+    //     if (block.firstFourBits === submittedBlock.firstFourBits) {
+    //         // First 4 bits from the block match
+    //         firstBlocks.push(block)
+    //     } else if (block.lastNineBits === submittedBlock.lastNineBits) {
+    //         // Last 9 bits from the block match
+    //         lastBlocks.push(block)
+    //     } else { return }
+    // })
+    // console.log(data)
+    res.render("result", { block: submittedBlock, allBlocks: JSON.stringify(data)})
 })
 
 app.listen(process.env.PORT || 3000)
