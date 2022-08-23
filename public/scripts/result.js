@@ -15,17 +15,12 @@ const woolData = {
     "brown": {'bits': 12, 'colour': '#918474'},
 };
 
-// Get the tabnav <ul>
-const tabnav = document.getElementById('tabnav');
-// Get the tabcontent <div>
-const tabcontent = document.getElementById('tabcontent');
-
-
-
-
-
-
 fetch("/api/blocklist").then((response) => response.json()).then((data) => {
+    // Get the tabnav <ul>
+    const tabnav = document.getElementById('tabnav');
+    // Get the tabcontent <div>
+    const tabcontent = document.getElementById('tabcontent');
+
     Object.keys(woolData).forEach((wooltype) => {
         // Create a new tab <li> that looks like: <li class='tab active ' data-tab-target="#white">white</li>
         const tab = document.createElement('li');
@@ -95,6 +90,11 @@ function getBlocks(data, mode, bits) {
 
     Object.keys(data).forEach((element) => {
         const block = data[element];
+        if (bits == 0 || bits == 13) {
+            validBlocks.push(submittedBlock)
+            return validBlocks
+        }
+
         if (block.name == submittedBlock.name.toString() || block.name == "null") { return }
         
         if (mode == 'first') {
@@ -121,7 +121,7 @@ function addInfoHeader(wooltype) {
 
     // Give the location <p> properties and add to colour <div>
     const location = document.createElement('p');
-    location.innerHTML = `The wordtearing needs to take place in the location from the ${wooltype} wool block`
+    location.innerHTML = `The wordtearing needs to take place in the location from the ${wooltype} wool block at bit ${woolData[wooltype]['bits']}`
 
     // Append childeren to the info <div>
     info.appendChild(location);

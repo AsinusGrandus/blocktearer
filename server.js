@@ -15,7 +15,7 @@ class Block {
         this.bits = bits.substring(2, 15);
 
         this.longName = longName;
-        this.details = longName.includes("[") ? longName.split("[")[1].slice(0, -1).split(",") : ["no details"]; // split long name into minecraft:name and details], remove ] at the end and split into list
+        this.details = longName.includes("[") ? longName.split("[")[1].slice(0, -1).split(",") : ["no_details"]; // split long name into minecraft:name and details], remove ] at the end and split into list
         
         this.name = longName == "null" ? "null": longName.split("[")[0].substring(10); // split long name into minecraft:name and details]
         this.oldName = this.name;
@@ -44,7 +44,7 @@ class Block {
         //     this.details.push("flowing=true");
         // }
 
-        if (this.details != "no details") {
+        if (this.details != "no_details") {
             this.details.forEach((detail) => {
                 if (detail.includes("variant")) {
                     const variant = detail.split("=")[1]; // get variant
