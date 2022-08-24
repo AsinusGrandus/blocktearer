@@ -79,6 +79,7 @@ fetch("/api/blocklist").then((response) => response.json()).then((data) => {
 
 function getSubmittedBlock() {
     const submittedBlockDiv = document.getElementById('submittedBlockDataDiv');
+    console.log(submittedBlockDiv)
     const submittedBlock = JSON.parse(submittedBlockDiv.dataset.submittedblock);
     return submittedBlock
 }
@@ -306,7 +307,7 @@ function popUp(id) {
     const bitsDiv = document.getElementById('bits');
     bitsDiv.innerHTML = 'Bits: ' + block.bits;
 
-    const detailsText = document.createElement('p');
+    const detailsText = document.getElementById('detailstext');
     let detailsDivText = "Details:<br>";
     detailsText.innerHTML = detailsDivText;
 

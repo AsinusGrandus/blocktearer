@@ -31,11 +31,11 @@ body {
 }
 
 .tab.active {
-    background-color: rgb(121, 121, 121);
+    background-color: #424549;
 }
 
 .tab:hover {
-    background-color: rgb(185, 185, 185);
+    background-color: #424549;
 }
 
 /*Website style*/
@@ -68,6 +68,11 @@ body {
     display: grid;
     place-items:  center;
 }
+.block:hover {
+    cursor: pointer;
+    background-color: #424549;
+}
+
 /* https://sabe.io/tutorials/how-to-create-modal-popup-box */
 .modal {
     position: fixed;

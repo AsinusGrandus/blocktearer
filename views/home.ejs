@@ -11,23 +11,33 @@
     <title>McWordTearer</title>
 </head>
 <body>
-    <div class='column_holder'>
-        <div class="block_column">
-            <p>The block you want to get:</p>
+    <div class="center">
+        <div class="block" style="text-align: center;">
+            <img src="static/images/logo.png" width="150" height="150">
+        </div>
+        <br>
+        <div class="block">
             <form action="/result" method="post">
-                <input list="block_name" name="block_name" id="blockname">
+                <input list="block_name" name="block_name" id="blockname" placeholder=" Desired block" style="border-style: solid; border-width: 2px; border-color: #424549; border-radius: 15px; color:white;">
                 <datalist id="block_name"></datalist>
-                <button type="submit">Submit</button>
+                <button type="submit" id="submit-button" style="border-width: 0px; text-decoration: none; color: #0099ff;"><b>Submit</b></button>
             </form>
-            <div class="details">
-                <p>Details:</p>
-                <p id="details"></p>
-            </div>
         </div>
-        <div class="block_column">
-            <p>All block ids:</p>
-            <p id="all_data"></p>
-        </div>
+        <br>
+        <!-- <div class="block details">
+            <p style="color: white;">Details:</p>
+            <p id="details"></p>
+        </div> -->
     </div>
+    <footer id="footer">
+        <div style="text-align: left; padding: 10px;">
+            <a href="https://github.com/AsinusGrandus/blocktearer">
+                <img src="static/images/github.png" width="50" height="50">
+            </a>
+        </div>
+        <div style="text-align: right; padding: 5px; color: #424549">
+            <p><b>AsinusGrandus</b>/blocktearer</p>
+        </div>
+    </footer>
 </body>
 </html>

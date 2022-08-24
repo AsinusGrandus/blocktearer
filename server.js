@@ -106,7 +106,7 @@ app.get("/api/blocklist", (req, res) => {
 app.post("/result", async (req, res) => {
     const data = getBlocks();
     const idName = req.body.block_name;
-    const id = idName.split(":")[0] // split id: name into ['id', ' name']
+    const id = idName.split(":")[0].replace(' ','') // split id: name into ['id', ' name']
     const name = idName.split(" ")[1] // split id: name into ['id:', 'name']
 
     if (idName == "" || !/[0-9]+: [a-z]+/.test(idName)) {
@@ -116,23 +116,6 @@ app.post("/result", async (req, res) => {
 
     const submittedBlock = data[id];
 
-    // let firstBlocks = new Array();
-    // let lastBlocks = new Array();
-
-    // Object.keys(data).forEach((element) => {
-    //     const block = data[element];
-    //     if (block.name == name.toString() || block.name == "null") { return }
-        
-    //     // It is a valid block and not itself
-    //     if (block.firstFourBits === submittedBlock.firstFourBits) {
-    //         // First 4 bits from the block match
-    //         firstBlocks.push(block)
-    //     } else if (block.lastNineBits === submittedBlock.lastNineBits) {
-    //         // Last 9 bits from the block match
-    //         lastBlocks.push(block)
-    //     } else { return }
-    // })
-    // console.log(data)
     res.render("result", { block: submittedBlock, allBlocks: JSON.stringify(data)})
 })
 
