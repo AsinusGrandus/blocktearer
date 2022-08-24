@@ -6,10 +6,13 @@ No problem! This tool will help you.
   
 ## How to use this tool?
 Select the block you want to obtain:  
-![select](https://github.com/AsinusGrandus/blocktearer/blob/main/public/images/tut_select.png)  
-
+  
+![select](https://github.com/AsinusGrandus/blocktearer/blob/main/public/images/tut_selector.png)  
+  
 Combine two blocks from the two columns:  
+  
 ![choose](https://github.com/AsinusGrandus/blocktearer/blob/main/public/images/tut_choose.png)  
 
 Use these blocks to obtain the block you want in the specified location:  
+  
 ![location](https://github.com/AsinusGrandus/blocktearer/blob/main/public/images/tut_location.png)  
