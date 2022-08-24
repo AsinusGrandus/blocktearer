@@ -94,13 +94,17 @@ function getBlocks(){
     return data
 }
 
-app.get("/", (req, res) => {
-    res.render("home")
-})
-
 app.get("/api/blocklist", (req, res) => {
     const data = getBlocks();
     res.send(data);
+})
+
+app.get("/", (req, res) => {
+    res.render("selector")
+})
+
+app.get("/locations", (req, res) => {
+    res.render("locations")
 })
 
 app.post("/result", async (req, res) => {

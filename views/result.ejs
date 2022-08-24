@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="static/images/logo.ico">
 
     <script type="text/javascript" src="static/scripts/result.js" defer></script>
     <link rel="stylesheet" href="static/styles/result.css">
 
-    <title>McWordTearer</title>
+    <title>blocktearer</title>
 </head>
 <body>
     <ul class="tabs" id="tabnav"></ul>
@@ -28,5 +29,15 @@
     </div>
     <div id="submittedBlockDataDiv" data-submittedblock=<%-JSON.stringify(locals.block);%>></div>
     <div id="allBlocks" data-blocks=<%=locals.allBlocks;%>></div>
+    <footer id="footer">
+        <div style="text-align: left; padding: 10px;">
+            <a href="https://github.com/AsinusGrandus/blocktearer">
+                <img src="static/images/github.png" width="50" height="50">
+            </a>
+        </div>
+        <div style="text-align: right; padding: 5px; color: #424549">
+            <p><b>AsinusGrandus</b>/blocktearer</p>
+        </div>
+    </footer>
 </body>
 </html>

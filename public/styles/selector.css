@@ -19,10 +19,17 @@
     background-color: #282b30;
 }
 
+body {
+    overflow-x: hidden;
+}
+
 #footer {
     display: flex;
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: auto;            /* Footer height */
-  }
+    height: auto;
+
+    font-size: 20px;
+    font-family: monospace;
+}

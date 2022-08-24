@@ -39,9 +39,9 @@ body {
 }
 
 /*Website style*/
-* {
+:not(#footer * ) {
     font-family: monospace;
-    font-size: 15px;
+    font-size: 17px;
 }
 
 .column_holder {
@@ -71,6 +71,17 @@ body {
 .block:hover {
     cursor: pointer;
     background-color: #424549;
+}
+
+#footer {
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: auto;
+
+    font-size: 20px;
+    font-family: monospace;
 }
 
 /* https://sabe.io/tutorials/how-to-create-modal-popup-box */
