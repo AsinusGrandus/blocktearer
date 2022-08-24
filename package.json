@@ -1,10 +1,11 @@
 {
-  "name": "mcwordtearer",
+  "name": "blocktearer",
   "version": "1.0.0",
-  "description": "",
+  "description": "Do you want to use falling block to obtain a certain block but do you not know what blocks you need to combine?  \r No problem! This tool will help you.",
   "main": "src/server.js",
   "scripts": {
-    "devStart": "nodemon server.js"
+    "devStart": "nodemon server.js",
+    "start": "node server.js"
   },
   "author": "AsinusGrandus",
   "license": "ISC",
@@ -14,5 +15,13 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.19"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AsinusGrandus/mc-wordtearing.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AsinusGrandus/mc-wordtearing/issues"
+  },
+  "homepage": "https://github.com/AsinusGrandus/mc-wordtearing#readme"
 }
