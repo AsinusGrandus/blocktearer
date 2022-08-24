@@ -139,7 +139,7 @@ function addInfoHeader(wooltype) {
 
     // Give the location <p> properties and add to colour <div>
     const location = document.createElement('p');
-    location.innerHTML = `The wordtearing needs to take place in the <a href="/locations" style="text-decoration: none; color: #0099ff; ">location</a> from the ${wooltype} wool block at bit ${woolData[wooltype]['bits']}: ${bits}`
+    location.innerHTML = `The wordtearing needs to take place in the <a href="/locations" style="text-decoration: none; color: #0099ff; "><b>location</b></a> from the ${wooltype} wool block at bit ${woolData[wooltype]['bits']}: ${bits}`
 
     // Append childeren to the info <div>
     info.appendChild(goBack);

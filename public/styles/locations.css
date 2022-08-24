@@ -3,7 +3,7 @@
 }
 
 body {
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
 :not(#footer * ) {
@@ -11,14 +11,21 @@ body {
     font-size: 17px;
 }
 
+#page-container {
+    position: relative;
+    min-height: 100vh;
+}
 
+#content-wrap {
+    padding-bottom: 80px;    /* Footer height */
+}
 
 #footer {
     display: flex;
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: auto;
+    height: 70px;
 
     font-size: 20px;
     font-family: monospace;

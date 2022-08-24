@@ -12,33 +12,37 @@
     <title>blocktearer</title>
 </head>
 <body>
-    <div class="center">
-        <div class="block" style="text-align: center;">
-            <img src="static/images/logo.png" width="150" height="150">
+    <div id="page-container">
+        <div id="content-wrap">
+            <div class="center">
+                <div class="block" style="text-align: center;">
+                    <img src="static/images/logo.png" width="150" height="150">
+                </div>
+                <br>
+                <div class="block">
+                    <form action="/result" method="post">
+                        <input list="block_name" name="block_name" id="blockname" placeholder=" Desired block" style="border-style: solid; border-width: 2px; border-color: #424549; border-radius: 15px; color:white;">
+                        <datalist id="block_name"></datalist>
+                        <button type="submit" id="submit-button" onmouseover="this.style.cursor='pointer'" style="border-width: 0px; text-decoration: none; color: #0099ff; "><b>Submit</b></button>
+                    </form>
+                </div>
+                <br>
+                <!-- <div class="block details">
+                    <p style="color: white;">Details:</p>
+                    <p id="details"></p>
+                </div> -->
+            </div>
         </div>
-        <br>
-        <div class="block">
-            <form action="/result" method="post">
-                <input list="block_name" name="block_name" id="blockname" placeholder=" Desired block" style="border-style: solid; border-width: 2px; border-color: #424549; border-radius: 15px; color:white;">
-                <datalist id="block_name"></datalist>
-                <button type="submit" id="submit-button" onmouseover="this.style.cursor='pointer'" style="border-width: 0px; text-decoration: none; color: #0099ff; "><b>Submit</b></button>
-            </form>
-        </div>
-        <br>
-        <!-- <div class="block details">
-            <p style="color: white;">Details:</p>
-            <p id="details"></p>
-        </div> -->
+        <footer id="footer">
+            <div style="text-align: left; padding: 10px;">
+                <a href="https://github.com/AsinusGrandus/blocktearer">
+                    <img src="static/images/github.png" width="50" height="50">
+                </a>
+            </div>
+            <div style="text-align: right; padding: 5px; color: #424549">
+                <p><b>AsinusGrandus</b>/blocktearer</p>
+            </div>
+        </footer>
     </div>
-    <footer id="footer">
-        <div style="text-align: left; padding: 10px;">
-            <a href="https://github.com/AsinusGrandus/blocktearer">
-                <img src="static/images/github.png" width="50" height="50">
-            </a>
-        </div>
-        <div style="text-align: right; padding: 5px; color: #424549">
-            <p><b>AsinusGrandus</b>/blocktearer</p>
-        </div>
-    </footer>
 </body>
 </html>

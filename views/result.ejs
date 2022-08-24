@@ -12,32 +12,37 @@
     <title>blocktearer</title>
 </head>
 <body>
-    <ul class="tabs" id="tabnav"></ul>
+    <div id="page-container">
+        <div id="content-wrap">
+            <ul class="tabs" id="tabnav"></ul>
   
-    <div class="tab-content" id="tabcontent"></div>
-
-    <!-- Popup -->
-    <div class="modal">
-        <div class="modal-content">
-            <span class="close-button">x</span>
-            <!-- <img id="blockimg" width="100" height="100"> -->
-            <b id="blockname">Block name</b>
-            <div id="bits">bits</div>  
-            <div id="detailstext"></div>
-            <div id="details" >details</div>
+            <div class="tab-content" id="tabcontent"></div>
+        
+            <!-- Popup -->
+            <div class="modal">
+                <div class="modal-content">
+                    <span class="close-button">x</span>
+                    <!-- <img id="blockimg" width="100" height="100"> -->
+                    <b id="blockname">Block name</b>
+                    <div id="bits">bits</div>  
+                    <div id="detailstext"></div>
+                    <div id="details" >details</div>
+                </div>
+            </div>
+            <div id="submittedBlockDataDiv" data-submittedblock=<%-JSON.stringify(locals.block);%>></div>
+            <div id="allBlocks" data-blocks=<%=locals.allBlocks;%>></div>
         </div>
+        <footer id="footer">
+            <div style="text-align: left; padding: 10px;">
+                <a href="https://github.com/AsinusGrandus/blocktearer">
+                    <img src="static/images/github.png" width="50" height="50">
+                </a>
+            </div>
+            <div style="text-align: right; padding: 5px; color: #424549">
+                <p><b>AsinusGrandus</b>/blocktearer</p>
+            </div>
+        </footer>
     </div>
-    <div id="submittedBlockDataDiv" data-submittedblock=<%-JSON.stringify(locals.block);%>></div>
-    <div id="allBlocks" data-blocks=<%=locals.allBlocks;%>></div>
-    <footer id="footer">
-        <div style="text-align: left; padding: 10px;">
-            <a href="https://github.com/AsinusGrandus/blocktearer">
-                <img src="static/images/github.png" width="50" height="50">
-            </a>
-        </div>
-        <div style="text-align: right; padding: 5px; color: #424549">
-            <p><b>AsinusGrandus</b>/blocktearer</p>
-        </div>
-    </footer>
+    
 </body>
 </html>

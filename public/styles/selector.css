@@ -20,7 +20,16 @@
 }
 
 body {
-    overflow-x: hidden;
+    overflow: hidden;
+}
+
+#page-container {
+    position: relative;
+    min-height: 100vh;
+}
+
+#content-wrap {
+    padding-bottom: 70px;    /* Footer height */
 }
 
 #footer {
@@ -28,7 +37,7 @@ body {
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: auto;
+    height: 70px;
 
     font-size: 20px;
     font-family: monospace;
