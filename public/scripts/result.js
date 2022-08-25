@@ -15,6 +15,16 @@ const woolData = {
     "brown": {'bits': 12, 'colour': '#918474'},
 };
 
+// window.addEventListener('load', (event) => {
+//     console.log('page is laoded')
+//     const load = document.getElementById('load-wrapper');
+//     load.style.display = "none"
+
+//     const content = document.getElementById('content-wrap');
+//     content.style.display = null;
+
+// })
+
 fetch("/api/blocklist").then((response) => response.json()).then((data) => {
     // Get the tabnav <ul>
     const tabnav = document.getElementById('tabnav');
@@ -133,7 +143,7 @@ function addInfoHeader(wooltype) {
     <a href="/" style="color: #0099ff; text-decoration: none;"><b><- Go back</b></a>
     <p>Selected block: (<b>${submittedBlock.id}) ${submittedBlock.name}</b><br>Bits: ${submittedBlock.bits}<br>Details: ${submittedBlock.details}</p>
     <p>The wordtearing needs to take place in the <a href="/locations" style="text-decoration: none; color: #0099ff; "><b>location</b></a> from the ${wooltype} wool block at bit ${woolData[wooltype]['bits']}: ${bits}</p>
-    <p>(Images used below might not be the correct image for that block: please refer to the id to know what block you need)</p>
+    <p>(Images used below might not be the correct image for that blockstate: please refer to the block state id to know what block you need)</p>
     `;
 
     return info
@@ -214,9 +224,9 @@ function addBlock(block) {
     blockdiv.dataset.details = JSON.stringify([block]);
     // .dataset.block holds the block where the div belongs to
     blockdiv.dataset.block = JSON.stringify([block]);
-
+    console.log(block.name, block.img)
     blockdiv.innerHTML = `
-    <img src="${block.img}" width="50 height="50" onerror="this.onerror=null; this.src='https://minecraft-api.vercel.app/images/blocks/air.png';">
+    <img src="${block.img}" width="50 height="50" onerror="this.onerror=null; this.src='https://static.wikia.nocookie.net/minecraft_gamepedia/images/b/b5/Missing_Texture_JE4.png';">
     <p>${block.oldName}</p>
     `;
  
