@@ -79,13 +79,13 @@ fetch("/api/blocklist").then((response) => response.json()).then((data) => {
 
 function getSubmittedBlock() {
     const submittedBlockDiv = document.getElementById('submittedBlockDataDiv');
-    console.log(submittedBlockDiv)
     const submittedBlock = JSON.parse(submittedBlockDiv.dataset.submittedblock);
     return submittedBlock
 }
 
 // Get blocks that match requirements
 function getBlocks(data, mode, bits) {
+    // data: all blocks
     // mode: first/last (bits that need to match)
     // bits: number (where to split the 13 bits)
     // Get sumbitted block
@@ -116,35 +116,25 @@ function getBlocks(data, mode, bits) {
         } else { return }  
     })
 
-    console.log('Block matches for ' + mode + ' ' + bits + ':' + validBlocks.length)
     return validBlocks
 
 }
 
 function addInfoHeader(wooltype) {
+    const submittedBlock = getSubmittedBlock();
+
+    // the spitted bits from the sumbitted block
+    const bits = `<b>${submittedBlock.bits.substring(0,woolData[wooltype]['bits'])} ${submittedBlock.bits.substring(woolData[wooltype]['bits'])}</b>`
+
     // Create info <div> that will display extra information above the grid
     const info = document.createElement('div');
 
-    const submittedBlock = getSubmittedBlock();
-    const bits = `<b>${submittedBlock.bits.substring(0,woolData[wooltype]['bits'])} ${submittedBlock.bits.substring(woolData[wooltype]['bits'])}</b>`
-
-    const goBack = document.createElement('a');
-    goBack.href = "/";
-    goBack.innerHTML = "<b><- Go back</b>";
-    goBack.style.textDecoration = "none";
-    goBack.style.color = "#0099ff";
-    const submittedBlockInfo = document.createElement('p');
-    submittedBlockInfo.innerHTML = `Selected block: (<b>${submittedBlock.id}) ${submittedBlock.name}</b><br>Bits: ${submittedBlock.bits}<br>Details: ${submittedBlock.details}`;
-
-
-    // Give the location <p> properties and add to colour <div>
-    const location = document.createElement('p');
-    location.innerHTML = `The wordtearing needs to take place in the <a href="/locations" style="text-decoration: none; color: #0099ff; "><b>location</b></a> from the ${wooltype} wool block at bit ${woolData[wooltype]['bits']}: ${bits}`
-
-    // Append childeren to the info <div>
-    info.appendChild(goBack);
-    info.appendChild(submittedBlockInfo);
-    info.appendChild(location);
+    info.innerHTML = `
+    <a href="/" style="color: #0099ff; text-decoration: none;"><b><- Go back</b></a>
+    <p>Selected block: (<b>${submittedBlock.id}) ${submittedBlock.name}</b><br>Bits: ${submittedBlock.bits}<br>Details: ${submittedBlock.details}</p>
+    <p>The wordtearing needs to take place in the <a href="/locations" style="text-decoration: none; color: #0099ff; "><b>location</b></a> from the ${wooltype} wool block at bit ${woolData[wooltype]['bits']}: ${bits}</p>
+    <p>(Images used below might not be the correct image for that block: please refer to the id to know what block you need)</p>
+    `;
 
     return info
 }
@@ -172,7 +162,7 @@ function addColumn(data, wooltype, name) {
     
     // Add explanation <p> to blockColumn <div>
     blockColumn.appendChild(addExplanation(wooltype, name));
-    blockColumn.appendChild(addGrid(data, wooltype, name))
+    blockColumn.appendChild(addGrid(data, wooltype, name));
     
     return blockColumn
 }
@@ -220,28 +210,16 @@ function addBlock(block) {
         console.log('clicked ' + block.name)
         popUp(block.name); 
     });
+    // dataset.details holds blocks with the same name but different ids and details
     blockdiv.dataset.details = JSON.stringify([block]);
+    // .dataset.block holds the block where the div belongs to
     blockdiv.dataset.block = JSON.stringify([block]);
 
-
-    // Create <img> element
-    const img = document.createElement('img');
-    img.src = block.img
-    img.setAttribute("height", "50");
-    img.setAttribute("width", "50");
-    img.addEventListener("error", function(){ 
-        this.onerror=null;
-        this.src='https://minecraft-api.vercel.app/images/blocks/air.png'
-    });
-    
-    // Create <p> element
-    const blockP = document.createElement('p');
-    const text = document.createTextNode(block.oldName);
-    blockP.appendChild(text); // add text to <p>
-
-    blockdiv.appendChild(img)
-    blockdiv.appendChild(blockP); // add to <div>
-
+    blockdiv.innerHTML = `
+    <img src="${block.img}" width="50 height="50" onerror="this.onerror=null; this.src='https://minecraft-api.vercel.app/images/blocks/air.png';">
+    <p>${block.oldName}</p>
+    `;
+ 
     return blockdiv
 }
 
@@ -329,4 +307,3 @@ function popUp(id) {
 
     toggleModal()
 }
-// https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_loader5
