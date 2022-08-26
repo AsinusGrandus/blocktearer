@@ -143,7 +143,7 @@ function addInfoHeader(wooltype) {
     <a href="/" style="color: #0099ff; text-decoration: none;"><b><- Go back</b></a>
     <p>Selected block: (<b>${submittedBlock.id}) ${submittedBlock.name}</b><br>Bits: ${submittedBlock.bits}<br>Details: ${submittedBlock.details}</p>
     <p>The wordtearing needs to take place in the <a href="/locations" style="text-decoration: none; color: #0099ff; "><b>location</b></a> from the ${wooltype} wool block at bit ${woolData[wooltype]['bits']}: ${bits}</p>
-    <p>(Images used below might not be the correct image for that blockstate: please refer to the block state id to know what block you need)</p>
+    <p>(Images used below might not be the correct image for that blockstate: please refer to the block state id to know what blockstate you need)</p>
     `;
 
     return info
